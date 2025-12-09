@@ -9,11 +9,36 @@ import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { SEO } from "@/components/SEO";
-import { SITE_NAME, SITE_URL, TAGLINE, CONTACT, SERVICES } from "@/config/siteConfig";
+import { SITE_NAME, SITE_URL, TAGLINE, CONTACT, SERVICES, SERVICE_AREAS, DEFAULT_SEO } from "@/config/siteConfig";
 
 const Index = () => {
-  // Structured data for homepage
-  const structuredData = {
+  // LocalBusiness structured data for homepage
+  const localBusinessJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: SITE_NAME,
+    description: DEFAULT_SEO.description,
+    url: SITE_URL,
+    telephone: CONTACT.phone,
+    email: CONTACT.email,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "İzmir",
+      addressRegion: "İzmir",
+      addressCountry: "TR",
+      streetAddress: CONTACT.address,
+    },
+    areaServed: SERVICE_AREAS.map((area) => ({
+      "@type": "City",
+      name: area,
+    })),
+    priceRange: "$$",
+    image: `${SITE_URL}/og-image.jpg`,
+    sameAs: [],
+  };
+
+  // HomeAndConstructionBusiness structured data (more specific)
+  const homeConstructionJsonLd = {
     "@context": "https://schema.org",
     "@type": "HomeAndConstructionBusiness",
     name: SITE_NAME,
@@ -35,15 +60,18 @@ const Index = () => {
     image: `${SITE_URL}/og-image.jpg`,
   };
 
+  // Use LocalBusiness as primary structured data
+  const structuredData = localBusinessJsonLd;
+
   return (
     <div className="min-h-screen">
       <SEO
         title="İzmir Tadilat Uzmanı | Mutfak, Banyo & Komple Ev Tadilatı | Ücretsiz Keşif"
         description="İzmir'in en güvenilir tadilat firması. Mutfak, banyo ve komple ev tadilatında profesyonel hizmet. İç mimar desteği, 2 yıl garanti, ücretsiz keşif. Hemen teklif alın!"
-        canonicalUrl={SITE_URL}
-        ogImage={`${SITE_URL}/og-image.jpg`}
-        ogType="website"
-        structuredData={structuredData}
+        url={SITE_URL}
+        image={`${SITE_URL}/og-image.jpg`}
+        type="website"
+        jsonLd={structuredData}
       />
       <Header />
       <Hero />

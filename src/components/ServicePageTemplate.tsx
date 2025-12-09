@@ -3,7 +3,9 @@ import { Button } from "@/components/ui/button";
 import Header from "./Header";
 import Footer from "./Footer";
 import WhatsAppButton from "./WhatsAppButton";
-import { CONTACT } from "@/config/siteConfig";
+import { SEO } from "./SEO";
+import { CONTACT, SITE_URL } from "@/config/siteConfig";
+import { useLocation } from "react-router-dom";
 
 interface ServicePageTemplateProps {
   title: string;
@@ -17,11 +19,22 @@ const ServicePageTemplate = ({
   title,
   description,
   content,
-  metaTitle: _metaTitle,
+  metaTitle,
   image,
 }: ServicePageTemplateProps) => {
+  const location = useLocation();
+  const pageUrl = `${SITE_URL}${location.pathname}`;
+  const ogImage = image ? (image.startsWith("http") ? image : `${SITE_URL}${image}`) : undefined;
+
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title={metaTitle}
+        description={description}
+        url={pageUrl}
+        image={ogImage}
+        type="website"
+      />
       <Header />
 
       <main className="flex-1 pt-20">

@@ -61,16 +61,14 @@ const BlogPost = () => {
   const postImage = post?.featured_image || `${SITE_URL}/favicon.png`;
   const fullPostImage = postImage.startsWith("http") ? postImage : `${SITE_URL}${postImage}`;
 
-  // Prepare structured data for SEO
-  const structuredData = post
+  // Prepare Article/BlogPosting structured data for SEO
+  const articleJsonLd = post
     ? {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         headline: post.meta_title || post.title,
         description: post.meta_description || post.excerpt || getExcerpt(post.content),
-        image: fullPostImage,
-        datePublished: post.created_at,
-        dateModified: post.updated_at || post.created_at,
+        articleBody: getExcerpt(post.content, 500), // Plain text excerpt for articleBody
         author: {
           "@type": "Organization",
           name: SITE_NAME,
@@ -85,6 +83,9 @@ const BlogPost = () => {
             url: `${SITE_URL}/favicon.png`,
           },
         },
+        datePublished: post.created_at,
+        dateModified: post.updated_at || post.created_at,
+        image: fullPostImage,
         mainEntityOfPage: {
           "@type": "WebPage",
           "@id": postUrl,
@@ -145,10 +146,10 @@ const BlogPost = () => {
         <SEO
           title={post.meta_title || post.title}
           description={post.meta_description || post.excerpt || getExcerpt(post.content)}
-          canonicalUrl={postUrl}
-          ogImage={fullPostImage}
-          ogType="article"
-          structuredData={structuredData}
+          url={postUrl}
+          image={fullPostImage}
+          type="article"
+          jsonLd={articleJsonLd}
         />
       )}
       <Header />

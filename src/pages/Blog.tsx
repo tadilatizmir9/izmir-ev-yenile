@@ -69,9 +69,9 @@ const Blog = () => {
       <SEO
         title="Blog"
         description="Tadilat ve dekorasyon hakkında güncel bilgiler, ipuçları ve ilham veren içerikler"
-        canonicalUrl={blogUrl}
-        ogType="website"
-        structuredData={structuredData}
+        url={blogUrl}
+        type="website"
+        jsonLd={structuredData}
       />
       <Header />
 

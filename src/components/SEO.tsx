@@ -4,6 +4,11 @@ import { SITE_NAME, SITE_URL, DEFAULT_SEO } from "@/config/siteConfig";
 interface SEOProps {
   title?: string;
   description?: string;
+  image?: string;
+  url?: string;
+  type?: "website" | "article";
+  jsonLd?: object;
+  // Legacy props for backwards compatibility
   canonicalUrl?: string;
   ogImage?: string;
   ogType?: string;
@@ -13,13 +18,19 @@ interface SEOProps {
 
 /**
  * SEO component that dynamically updates meta tags for better search engine optimization
+ * Supports both new prop names (title, description, image, url, type, jsonLd) and legacy props
  */
 export const SEO = ({
   title,
   description,
+  image,
+  url,
+  type = "website",
+  jsonLd,
+  // Legacy props
   canonicalUrl,
   ogImage,
-  ogType = "article",
+  ogType,
   twitterCard = "summary_large_image",
   structuredData,
 }: SEOProps) => {
@@ -29,10 +40,13 @@ export const SEO = ({
   const defaultDescription = DEFAULT_SEO.description;
   const defaultImage = `${siteUrl}/favicon.png`;
 
+  // Use new props if provided, otherwise fall back to legacy props
   const finalTitle = title ? `${title} | ${siteName}` : defaultTitle;
   const finalDescription = description || defaultDescription;
-  const finalCanonicalUrl = canonicalUrl || siteUrl;
-  const finalOgImage = ogImage || defaultImage;
+  const finalCanonicalUrl = url || canonicalUrl || siteUrl;
+  const finalOgImage = image || ogImage || defaultImage;
+  const finalOgType = type || ogType || "website";
+  const finalJsonLd = jsonLd || structuredData;
   const fullOgImage = finalOgImage.startsWith("http") ? finalOgImage : `${siteUrl}${finalOgImage}`;
 
   useEffect(() => {
@@ -77,7 +91,7 @@ export const SEO = ({
     // Open Graph tags
     updatePropertyTag("og:title", finalTitle);
     updatePropertyTag("og:description", finalDescription);
-    updatePropertyTag("og:type", ogType);
+    updatePropertyTag("og:type", finalOgType);
     updatePropertyTag("og:url", finalCanonicalUrl);
     updatePropertyTag("og:image", fullOgImage);
     updatePropertyTag("og:site_name", siteName);
@@ -90,7 +104,7 @@ export const SEO = ({
     updateMetaTag("twitter:image", fullOgImage);
 
     // Structured Data (JSON-LD)
-    if (structuredData) {
+    if (finalJsonLd) {
       // Remove existing structured data script if any
       const existingScript = document.querySelector('script[type="application/ld+json"][data-seo]');
       if (existingScript) {
@@ -100,7 +114,7 @@ export const SEO = ({
       const script = document.createElement("script");
       script.type = "application/ld+json";
       script.setAttribute("data-seo", "true");
-      script.textContent = JSON.stringify(structuredData);
+      script.textContent = JSON.stringify(finalJsonLd);
       document.head.appendChild(script);
     }
   }, [
@@ -108,9 +122,9 @@ export const SEO = ({
     finalDescription,
     finalCanonicalUrl,
     fullOgImage,
-    ogType,
+    finalOgType,
     twitterCard,
-    structuredData,
+    finalJsonLd,
     siteName,
   ]);
 

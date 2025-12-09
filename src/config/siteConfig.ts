@@ -54,3 +54,5 @@ export const DEFAULT_SEO = {
   title: `${SITE_NAME} | Anahtar Teslim Tadilat ve İç Mimarlık Hizmetleri`,
   description: `${TAGLINE}. Ücretsiz keşif ve şeffaf fiyatlandırma.`,
 } as const;
+
+

@@ -65,3 +65,5 @@ export const getExcerpt = (content: string, maxLength: number = 160): string => 
   }
   return textContent.substring(0, maxLength).trim() + "...";
 };
+
+
