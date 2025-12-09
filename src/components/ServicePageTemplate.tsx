@@ -6,31 +6,73 @@ import WhatsAppButton from "./WhatsAppButton";
 import { SEO } from "./SEO";
 import { CONTACT, SITE_URL } from "@/config/siteConfig";
 import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 interface ServicePageTemplateProps {
   title: string;
   description: string;
-  content: string[];
   metaTitle: string;
   image?: string;
+  slug: string;
 }
 
 const ServicePageTemplate = ({
   title,
   description,
-  content,
   metaTitle,
   image,
+  slug,
 }: ServicePageTemplateProps) => {
   const location = useLocation();
   const pageUrl = `${SITE_URL}${location.pathname}`;
   const ogImage = image ? (image.startsWith("http") ? image : `${SITE_URL}${image}`) : undefined;
 
+  const [pageContent, setPageContent] = useState<{
+    heading: string | null;
+    body: string | null;
+    meta_title: string | null;
+    meta_description: string | null;
+  } | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchContent = async () => {
+      try {
+        const { supabase } = await import("@/integrations/supabase/client");
+        const { data, error } = await supabase.from("page_content").select("*").eq("slug", slug).maybeSingle();
+        if (error) throw error;
+        if (isMounted) {
+          setPageContent(
+            data
+              ? {
+                  heading: data.heading,
+                  body: data.body,
+                  meta_title: data.meta_title,
+                  meta_description: data.meta_description,
+                }
+              : null
+          );
+        }
+      } catch (error) {
+        console.error("Sayfa içeriği yüklenemedi:", error);
+        if (isMounted) setPageContent(null);
+      }
+    };
+    fetchContent();
+    return () => {
+      isMounted = false;
+    };
+  }, [slug]);
+
+  const finalHeading = pageContent?.heading || title;
+  const finalMetaTitle = pageContent?.meta_title || metaTitle;
+  const finalMetaDescription = pageContent?.meta_description || description;
+
   return (
     <div className="min-h-screen flex flex-col">
       <SEO
-        title={metaTitle}
-        description={description}
+        title={finalMetaTitle}
+        description={finalMetaDescription}
         url={pageUrl}
         image={ogImage}
         type="website"
@@ -43,7 +85,7 @@ const ServicePageTemplate = ({
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="max-w-xl">
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground mb-6">
-                  {title}
+                  {finalHeading}
                 </h1>
                 <p className="text-lg text-muted-foreground mb-8">{description}</p>
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -78,17 +120,17 @@ const ServicePageTemplate = ({
           </div>
         </section>
 
-        <section className="py-16 md:py-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto prose prose-lg">
-              {content.map((paragraph, index) => (
-                <p key={index} className="text-muted-foreground leading-relaxed mb-6">
-                  {paragraph}
-                </p>
-              ))}
+        {pageContent?.body && (
+          <section className="py-16 md:py-20">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto prose prose-lg">
+                <div className="text-muted-foreground leading-relaxed prose prose-lg max-w-none">
+                  <div dangerouslySetInnerHTML={{ __html: pageContent.body }} />
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         <section className="py-16 md:py-20 bg-muted/30">
           <div className="container mx-auto px-4">

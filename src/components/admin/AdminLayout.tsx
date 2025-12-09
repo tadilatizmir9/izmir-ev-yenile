@@ -24,6 +24,7 @@ const AdminLayout = () => {
     { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
     { title: "İletişim Formları", url: "/admin/contact", icon: MessageSquare },
     { title: "Blog Yazıları", url: "/admin/blog", icon: FileText },
+    { title: "Sayfa İçerikleri", url: "/admin/pages", icon: FileText },
   ];
 
   return (
