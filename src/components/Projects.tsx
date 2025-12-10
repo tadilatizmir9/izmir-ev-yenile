@@ -1,7 +1,4 @@
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 import projectBornova from "@/assets/project-bornova.jpg";
 import projectKarsiyaka from "@/assets/project-karsiyaka.jpg";
@@ -72,7 +69,7 @@ const Projects = () => {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Tamamlanan Projeler
+            Projeler
           </h2>
           <p className="text-muted-foreground text-lg">
             İzmir'in farklı semtlerinde gerçekleştirdiğimiz tadilat projelerinden örnekler
@@ -105,14 +102,8 @@ const Projects = () => {
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   {project.description}
                 </p>
-                <div className="flex items-center justify-between pt-2">
+                <div className="pt-2">
                   <span className="text-xs text-muted-foreground">{project.location}</span>
-                  <Button variant="ghost" size="sm" className="text-primary p-0 h-auto" asChild>
-                    <Link to={project.link}>
-                      Detayları Gör
-                      <ArrowRight className="w-4 h-4 ml-1" />
-                    </Link>
-                  </Button>
                 </div>
               </CardContent>
             </Card>

@@ -19,6 +19,12 @@ const BucaTadilat = lazy(() => import("./pages/BucaTadilat"));
 const KonakTadilat = lazy(() => import("./pages/KonakTadilat"));
 const AlsancakTadilat = lazy(() => import("./pages/AlsancakTadilat"));
 const GaziemirTadilat = lazy(() => import("./pages/GaziemirTadilat"));
+const MavisehirTadilat = lazy(() => import("./pages/MavisehirTadilat"));
+const NarlidereTadilat = lazy(() => import("./pages/NarlidereTadilat"));
+const UrlaTadilat = lazy(() => import("./pages/UrlaTadilat"));
+const CesmeTadilat = lazy(() => import("./pages/CesmeTadilat"));
+const GuzelbahceTadilat = lazy(() => import("./pages/GuzelbahceTadilat"));
+const BayrakliTadilat = lazy(() => import("./pages/BayrakliTadilat"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const AdminAuth = lazy(() => import("./pages/AdminAuth"));
@@ -55,6 +61,12 @@ const App = () => (
             <Route path="/konak-tadilat" element={<KonakTadilat />} />
             <Route path="/alsancak-tadilat" element={<AlsancakTadilat />} />
             <Route path="/gaziemir-tadilat" element={<GaziemirTadilat />} />
+            <Route path="/mavisehir-tadilat" element={<MavisehirTadilat />} />
+            <Route path="/narlidere-tadilat" element={<NarlidereTadilat />} />
+            <Route path="/urla-tadilat" element={<UrlaTadilat />} />
+            <Route path="/cesme-tadilat" element={<CesmeTadilat />} />
+            <Route path="/guzelbahce-tadilat" element={<GuzelbahceTadilat />} />
+            <Route path="/bayrakli-tadilat" element={<BayrakliTadilat />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
 

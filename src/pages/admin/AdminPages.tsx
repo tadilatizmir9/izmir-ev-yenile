@@ -20,6 +20,12 @@ const EDITABLE_PAGES = [
   { slug: "konak-tadilat", label: "Konak Tadilat" },
   { slug: "alsancak-tadilat", label: "Alsancak Tadilat" },
   { slug: "gaziemir-tadilat", label: "Gaziemir Tadilat" },
+  { slug: "mavisehir-tadilat", label: "Mavişehir Tadilat" },
+  { slug: "narlidere-tadilat", label: "Narlıdere Tadilat" },
+  { slug: "urla-tadilat", label: "Urla Tadilat" },
+  { slug: "cesme-tadilat", label: "Çeşme Tadilat" },
+  { slug: "guzelbahce-tadilat", label: "Güzelbahçe Tadilat" },
+  { slug: "bayrakli-tadilat", label: "Bayraklı Tadilat" },
 ] as const;
 
 type EditableSlug = (typeof EDITABLE_PAGES)[number]["slug"];
@@ -33,6 +39,18 @@ interface PageContent {
   meta_title: string | null;
   meta_description: string | null;
 }
+
+type PageContentRow = {
+  id?: string;
+  slug: string;
+  title: string | null;
+  heading: string | null;
+  body: string | null;
+  meta_title: string | null;
+  meta_description: string | null;
+  created_at?: string;
+  updated_at?: string;
+};
 
 const emptyPageContent: PageContent = {
   slug: "",
@@ -60,22 +78,23 @@ const AdminPages = () => {
     try {
       const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
-        .from("page_content")
+        .from("page_content" as any)
         .select("*")
         .eq("slug", slug)
         .maybeSingle();
 
       if (error) throw error;
 
-      if (data) {
+      const row = data as unknown as PageContentRow | null;
+      if (row) {
         setPageData({
-          id: data.id,
-          slug: data.slug,
-          title: data.title,
-          heading: data.heading,
-          body: data.body,
-          meta_title: data.meta_title,
-          meta_description: data.meta_description,
+          id: row.id,
+          slug: row.slug,
+          title: row.title,
+          heading: row.heading,
+          body: row.body,
+          meta_title: row.meta_title,
+          meta_description: row.meta_description,
         });
       } else {
         setPageData({
@@ -119,7 +138,7 @@ const AdminPages = () => {
         updated_at: new Date().toISOString(),
       };
 
-      const { error } = await supabase.from("page_content").upsert(payload, { onConflict: "slug" });
+      const { error } = await supabase.from("page_content" as any).upsert(payload, { onConflict: "slug" });
       if (error) throw error;
 
       toast({ title: "Kaydedildi", description: "Sayfa içeriği kaydedildi." });
@@ -275,4 +294,5 @@ const LoaderIcon = ({ className }: { className?: string }) => (
 );
 
 export default AdminPages;
+
 
