@@ -7,7 +7,7 @@ interface SEOProps {
   image?: string;
   url?: string;
   type?: "website" | "article";
-  jsonLd?: object;
+  jsonLd?: object | object[];
   // Legacy props for backwards compatibility
   canonicalUrl?: string;
   ogImage?: string;
@@ -105,17 +105,21 @@ export const SEO = ({
 
     // Structured Data (JSON-LD)
     if (finalJsonLd) {
-      // Remove existing structured data script if any
-      const existingScript = document.querySelector('script[type="application/ld+json"][data-seo]');
-      if (existingScript) {
-        existingScript.remove();
-      }
+      // Remove existing structured data scripts if any
+      const existingScripts = document.querySelectorAll('script[type="application/ld+json"][data-seo]');
+      existingScripts.forEach((script) => script.remove());
 
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute("data-seo", "true");
-      script.textContent = JSON.stringify(finalJsonLd);
-      document.head.appendChild(script);
+      // Support both single object and array of objects
+      const jsonLdArray = Array.isArray(finalJsonLd) ? finalJsonLd : [finalJsonLd];
+
+      jsonLdArray.forEach((jsonLd, index) => {
+        const script = document.createElement("script");
+        script.type = "application/ld+json";
+        script.setAttribute("data-seo", "true");
+        script.setAttribute("data-seo-index", index.toString());
+        script.textContent = JSON.stringify(jsonLd);
+        document.head.appendChild(script);
+      });
     }
   }, [
     finalTitle,

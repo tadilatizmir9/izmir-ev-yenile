@@ -4,9 +4,9 @@ import Header from "./Header";
 import Footer from "./Footer";
 import WhatsAppButton from "./WhatsAppButton";
 import { SEO } from "./SEO";
-import { CONTACT, SITE_URL } from "@/config/siteConfig";
+import { CONTACT, SITE_URL, SITE_NAME } from "@/config/siteConfig";
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 interface ServicePageTemplateProps {
   title: string;
@@ -68,6 +68,106 @@ const ServicePageTemplate = ({
   const finalMetaTitle = pageContent?.meta_title || metaTitle;
   const finalMetaDescription = pageContent?.meta_description || description;
 
+  // Slug'dan lokasyon adını çıkar (sadece lokasyon sayfaları için)
+  const locationName = useMemo(() => {
+    if (!slug.includes("-tadilat")) return null;
+    
+    const slugToLocationMap: Record<string, string> = {
+      "bornova-tadilat": "Bornova",
+      "karsiyaka-tadilat": "Karşıyaka",
+      "buca-tadilat": "Buca",
+      "konak-tadilat": "Konak",
+      "alsancak-tadilat": "Alsancak",
+      "gaziemir-tadilat": "Gaziemir",
+      "mavisehir-tadilat": "Mavişehir",
+      "narlidere-tadilat": "Narlıdere",
+      "urla-tadilat": "Urla",
+      "cesme-tadilat": "Çeşme",
+      "guzelbahce-tadilat": "Güzelbahçe",
+      "bayrakli-tadilat": "Bayraklı",
+    };
+
+    return slugToLocationMap[slug] || null;
+  }, [slug]);
+
+  // JSON-LD oluştur (sadece lokasyon sayfaları için)
+  const jsonLd = useMemo(() => {
+    if (!locationName) return undefined;
+
+    const localBusinessJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      name: `${locationName} Tadilat | ${SITE_NAME}`,
+      description: `${locationName}'da mutfak, banyo ve komple ev tadilatı için profesyonel çözüm ortaklarıyla çalışan ${SITE_NAME}.`,
+      url: pageUrl,
+      telephone: CONTACT.phone,
+      email: CONTACT.email,
+      areaServed: {
+        "@type": "City",
+        name: "İzmir",
+      },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: locationName,
+        addressRegion: "İzmir",
+        addressCountry: "TR",
+      },
+      provider: {
+        "@type": "Organization",
+        name: SITE_NAME,
+      },
+    };
+
+    const faqJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: `${locationName}'da tadilat fiyatları neye göre değişiyor?`,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: `${locationName}'da tadilat fiyatları; dairenin metrekaresine, tadilatın kapsamına (sadece banyo, sadece mutfak veya komple ev), kullanılacak malzemelerin kalitesine ve işçilik detaylarına göre değişir. Kesin bir fiyat için keşif yapılması en sağlıklı yöntemdir.`,
+          },
+        },
+        {
+          "@type": "Question",
+          name: `${locationName}'da komple ev tadilatı ortalama ne kadar sürer?`,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: `Projenin kapsamına bağlı olarak değişmekle birlikte, ${locationName} bölgesinde ortalama bir komple ev tadilatı 4–8 hafta arasında tamamlanır. Sadece mutfak veya banyo tadilatları ise genellikle 1–3 hafta aralığında sonuçlanır.`,
+          },
+        },
+        {
+          "@type": "Question",
+          name: `${locationName}'da ücretsiz keşif hizmeti veriyor musunuz?`,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: `Evet, ${locationName} bölgesinde ücretsiz yerinde keşif hizmeti sunuyoruz. Keşif sırasında ölçüler alınır, ihtiyaçlarınız belirlenir ve size detaylı bir fiyat teklifi hazırlanır.`,
+          },
+        },
+        {
+          "@type": "Question",
+          name: `${locationName}'da hangi tadilat hizmetlerini sunuyorsunuz?`,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: `${locationName}'da mutfak tadilatı, banyo tadilatı, komple ev tadilatı ve iç mimarlık hizmetleri sunuyoruz. Tüm hizmetlerimizde profesyonel çözüm ortaklarımızla çalışıyoruz.`,
+          },
+        },
+        {
+          "@type": "Question",
+          name: `${locationName}'da tadilat için garanti veriyor musunuz?`,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: `Evet, ${locationName}'da gerçekleştirdiğimiz tüm tadilat işlemlerinde 2 yıl işçilik garantisi sunuyoruz. Malzeme garantileri de kullanılan ürünlere göre değişmektedir.`,
+          },
+        },
+      ],
+    };
+
+    return [localBusinessJsonLd, faqJsonLd];
+  }, [locationName, pageUrl]);
+
   return (
     <div className="min-h-screen flex flex-col">
       <SEO
@@ -76,6 +176,7 @@ const ServicePageTemplate = ({
         url={pageUrl}
         image={ogImage}
         type="website"
+        jsonLd={jsonLd}
       />
       <Header />
 
