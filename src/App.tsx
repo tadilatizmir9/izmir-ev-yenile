@@ -25,6 +25,7 @@ const UrlaTadilat = lazy(() => import("./pages/UrlaTadilat"));
 const CesmeTadilat = lazy(() => import("./pages/CesmeTadilat"));
 const GuzelbahceTadilat = lazy(() => import("./pages/GuzelbahceTadilat"));
 const BayrakliTadilat = lazy(() => import("./pages/BayrakliTadilat"));
+const Hakkimizda = lazy(() => import("./pages/Hakkimizda"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const AdminAuth = lazy(() => import("./pages/AdminAuth"));
@@ -67,6 +68,7 @@ const App = () => (
             <Route path="/cesme-tadilat" element={<CesmeTadilat />} />
             <Route path="/guzelbahce-tadilat" element={<GuzelbahceTadilat />} />
             <Route path="/bayrakli-tadilat" element={<BayrakliTadilat />} />
+            <Route path="/hakkimizda" element={<Hakkimizda />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
 

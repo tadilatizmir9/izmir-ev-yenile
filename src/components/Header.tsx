@@ -13,6 +13,7 @@ const Header = () => {
     { name: "Ana Sayfa", href: "/", isHash: false },
     { name: "Hizmetler", href: "hizmetler", isHash: true },
     { name: "Projeler", href: "projeler", isHash: true },
+    { name: "Hakkımızda", href: "/hakkimizda", isHash: false },
     { name: "Blog", href: "/blog", isHash: false },
     { name: "İletişim", href: "iletisim", isHash: true },
   ];
