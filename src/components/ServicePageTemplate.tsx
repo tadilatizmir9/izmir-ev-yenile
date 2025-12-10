@@ -123,9 +123,9 @@ const ServicePageTemplate = ({
         {pageContent?.body && (
           <section className="py-16 md:py-20">
             <div className="container mx-auto px-4">
-              <div className="max-w-3xl mx-auto prose prose-lg">
-                <div className="text-muted-foreground leading-relaxed prose prose-lg max-w-none">
-                  <div dangerouslySetInnerHTML={{ __html: pageContent.body }} />
+              <div className="max-w-3xl mx-auto prose prose-lg text-black">
+                <div className="leading-relaxed prose prose-lg max-w-none text-black">
+                  <div className="text-black" dangerouslySetInnerHTML={{ __html: pageContent.body }} />
                 </div>
               </div>
             </div>

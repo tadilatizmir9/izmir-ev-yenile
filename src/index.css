@@ -112,6 +112,25 @@
     font-family: var(--font-display);
     @apply font-semibold tracking-tight;
   }
+
+  a {
+    color: #E76F51;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #c65a1a;
+    text-decoration: none;
+  }
+
+  /* Button component'leri kendi stillerini uygular, bu yüzden Button içindeki linkler etkilenmez */
+  button a,
+  [role="button"] a,
+  .inline-flex.items-center.justify-center a {
+    color: inherit;
+    font-weight: inherit;
+  }
 }
 
 @layer utilities {
