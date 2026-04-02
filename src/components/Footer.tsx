@@ -83,7 +83,8 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-background/10 pt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-sm text-background/60">
-          <p>© 2024 {SITE_NAME}. Tüm hakları saklıdır.</p>
+          <p>© 2026 {SITE_NAME}. Tüm hakları saklıdır.</p>
+          <p>Bu site <a href="https://www.izmirwebsitesi.net/" target="_blank" rel="noopener noreferrer" className="underline hover:text-background transition-colors">İzmir Web Sitesi</a> tarafından yapılmıştır.</p>
           <div className="flex items-center gap-6">
             <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition-colors">
               <MessageCircle className="w-4 h-4" />
