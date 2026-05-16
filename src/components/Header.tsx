@@ -50,8 +50,8 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link to="/" className="flex items-center gap-1.5">
             <img src="/favicon.png" alt={`${SITE_NAME} Logo`} className="w-9 h-9" />
-            <span className="text-2xl font-display font-bold text-primary">Tadilat</span>
-            <span className="text-2xl font-display font-light text-foreground">İzmir</span>
+            <span className="text-2xl font-display font-bold text-primary">İzmir</span>
+            <span className="text-2xl font-display font-light text-foreground">Tadilat Merkezi</span>
           </Link>
 
           {/* Desktop Navigation */}

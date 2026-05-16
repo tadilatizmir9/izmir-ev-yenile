@@ -24,8 +24,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <span className="text-2xl font-display font-bold text-primary">Tadilat</span>
-              <span className="text-2xl font-display font-light">İzmir</span>
+              <span className="text-2xl font-display font-bold text-primary">İzmir</span>
+              <span className="text-2xl font-display font-light">Tadilat Merkezi</span>
             </div>
             <div className="space-y-2 text-sm leading-relaxed text-background/80">
               <p className="font-semibold">İzmir Tadilat Merkezi – Profesyonel Tadilat Çözüm Ortağı Ağı</p>
