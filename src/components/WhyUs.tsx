@@ -37,7 +37,7 @@ const WhyUs = () => {
           <div className="space-y-8">
             <div>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
-                Neden Tadilat İzmir?
+                Neden İzmir Tadilat Merkezi?
               </h2>
               <p className="text-muted-foreground text-lg">
                 20 yılı aşkın deneyimimiz ve yüzlerce mutlu müşterimizle İzmir'in güvenilir tadilat
@@ -64,7 +64,7 @@ const WhyUs = () => {
             <div className="rounded-2xl overflow-hidden shadow-2xl">
               <img
                 src={whyUsImage}
-                alt="Tadilat İzmir profesyonel ekip"
+                alt="İzmir Tadilat Merkezi profesyonel ekip"
                 className="w-full h-full object-cover aspect-square"
               />
             </div>

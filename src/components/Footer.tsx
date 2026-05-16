@@ -28,7 +28,7 @@ const Footer = () => {
               <span className="text-2xl font-display font-light">İzmir</span>
             </div>
             <div className="space-y-2 text-sm leading-relaxed text-background/80">
-              <p className="font-semibold">Tadilat İzmir – Profesyonel Tadilat Çözüm Ortağı Ağı</p>
+              <p className="font-semibold">İzmir Tadilat Merkezi – Profesyonel Tadilat Çözüm Ortağı Ağı</p>
               <p>
                 İzmir genelinde mutfak, banyo, komple ev tadilatı ve iç mimari çözümler sunan uzman ekiplere
                 yönlendirme hizmeti.

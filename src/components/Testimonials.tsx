@@ -17,7 +17,7 @@ const testimonials = [
   {
     name: "Fatma S.",
     location: "Buca",
-    text: "Banyo tadilatında çok zorlandığımız bir dönemde Tadilat İzmir ekibi ile tanıştık. Su kaçağı sorunumuzu kökten çözdüler ve banyomuzu sıfırdan yenilediler. Çok memnunuz.",
+    text: "Banyo tadilatında çok zorlandığımız bir dönemde İzmir Tadilat Merkezi ekibi ile tanıştık. Su kaçağı sorunumuzu kökten çözdüler ve banyomuzu sıfırdan yenilediler. Çok memnunuz.",
     rating: 5,
   },
 ];

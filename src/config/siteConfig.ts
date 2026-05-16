@@ -3,7 +3,7 @@
  * Update values here to change them across the entire application
  */
 
-export const SITE_NAME = "Tadilat İzmir";
+export const SITE_NAME = "İzmir Tadilat Merkezi";
 
 export const TAGLINE =
   "İzmir'de mutfak, banyo ve komple ev tadilatında profesyonel iç mimar ekibiyle anahtar teslim çözümler";
